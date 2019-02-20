@@ -2,6 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import csv
 import statistics
+from sklearn.preprocessing import MinMaxScaler
+from sklearn.preprocessing import normalize
 
 appliances = {"WHE":"Whole House",
               "RSE":"Basement",
@@ -47,13 +49,19 @@ with open('Electricity_P.csv') as csv_file:
     print(f'Processed {line_count} lines.')
 
 columns = ('WHE', 'RSE', 'GRE', 'MHE', 'B1E', 'BME', 'CWE', 'DWE', 'EQE', 'FRE', 'HPE', 'OFE', 'UTE', 'WOE', 'B2E', 'CDE', 'DNE', 'EBE', 'FGE', 'HTE', 'OUE', 'TVE', 'UNE')
-rows = ['Mean', 'Median']
-stats=[[]]
 
-for i in range (1, len(cols)):
-    stats[0].append(statistics.mean([int(row[i]) for row in list]))
-    stats[1].append(statistics.median([int(row[i]) for row in list]))
-    stats[2].append(statistics.mode([int(row[i]) for row in list]))
-    stats[3].append(statistics.pstdev([int(row[i]) for row in list]))
+# converting list of lists with string values into 2D array of floats to do calculations
+data = np.array(list[1:], dtype=np.float32)
 
-print(stats)
+# features range from 0 to 1
+minmax_scaler = MinMaxScaler(feature_range=(0, 1))
+data_minmax = minmax_scaler.fit_transform(data)
+# Least absolute deviations - sum of absolute values in each column equals 1 (insensitive to outliers)
+data_l1 = normalize(data,norm='l1', axis=1)
+# Least squares - sum of squares in each column equals 1 (sensitive to outliers)
+data_l2 = normalize(data,norm='l2', axis=1)
+
+# display normalized data
+print("\nMinMax Normalization\n", data_minmax)
+print("\nL1 Normalization\n", data_l1)
+print("\nL2 Normalization\n", data_l2)
