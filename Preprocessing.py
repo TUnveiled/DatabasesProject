@@ -5,7 +5,8 @@ from sklearn.preprocessing import normalize
 from sklearn.model_selection import train_test_split
 from sklearn.impute import SimpleImputer
 
-def readFile():
+
+def readFile(filename='Electricity_P.csv'):
     appliances = {"WHE":"Whole House",
                   "RSE":"Basement",
                   "GRE":"Garage",
@@ -30,7 +31,7 @@ def readFile():
                   "TVE":"Entertainment",
                   "UNE":"Unaccounted"}
 
-    with open('Electricity_P.csv') as csv_file:
+    with open(filename) as csv_file:
         csv_reader = csv.reader(csv_file, delimiter=',')
         line_count = 0
         for row in csv_reader:
@@ -38,7 +39,6 @@ def readFile():
                 cols = row
                 line_count += 1
             elif line_count == 1:
-                row.append("Time of Day")
                 list = [row]
                 line_count += 1
             else:
@@ -46,11 +46,9 @@ def readFile():
                 line_count += 1
         print(f'Processed {line_count} lines.')
 
-    columns = ['WHE', 'RSE', 'GRE', 'MHE', 'B1E', 'BME', 'CWE', 'DWE', 'EQE', 'FRE', 'HPE', 'OFE', 'UTE', 'WOE', 'B2E', 'CDE', 'DNE', 'EBE', 'FGE', 'HTE', 'OUE', 'TVE', 'UNE']
-
     # converting list of lists with string values into 2D array of floats to do calculations
     data = np.array(list[1:], dtype=np.float32)
-    return data, columns
+    return data, cols
 
 # method to normalize data
 # normType = "minmax", "l1", "l2"
@@ -80,8 +78,7 @@ def normalizeData(data, cols, normType):
                 normalize_writer.writerow(cols)
 
                 normalize_writer.writerows(normData)
-
-        return normData
+    return normData
 
 # testSize = float between 0 to 100
 def TrainTestSplit(data, testSize):

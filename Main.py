@@ -1,8 +1,9 @@
 import Preprocessing
+from NormalizeData import normalizeData
 
-data, cols = Preprocessing.readFile()
+data, cols = Preprocessing.readFile(filename='Electricity_P_Hourly.csv')
 
-normalizedData = Preprocessing.normalizeData(data, cols, 'minmax')
+normalizedData = normalizeData(data, 'minmax')
 
 print("\nThe normalized data:\n", normalizedData)
 
