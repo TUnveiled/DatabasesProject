@@ -70,7 +70,7 @@ with open('Electricity_P.csv') as csv_file:
             row.append(currenttime.hour)
             row.append(currenttime.weekday())
             row.append(currenttime.month)
-            row.append(int(currenttime.month / 4))
+            row.append(currenttime.month // 4)
             data = [row]
             line_count += 1
 
@@ -80,17 +80,17 @@ with open('Electricity_P.csv') as csv_file:
             row.append(currenttime.hour)
             row.append(currenttime.weekday())
             row.append(currenttime.month)
-            row.append(int(currenttime.month / 4))
+            row.append(currenttime.month // 4)
             data.append(row)
             line_count += 1
     print(f'Processed {line_count} lines.')
 
 previousRow = data[0]
 binEndings = []
-index = 0
+index = 1
 for row in data[1:]:
     if row[-4] != previousRow[-4]:
-        binEndings.append(index - 1)
+        binEndings.append(index)
 
     previousRow = row
     index += 1
@@ -108,7 +108,6 @@ for binEnding in binEndings:
 
     previousBinEnding = binEnding
 
-print(dataByHour)
 with open('Electricity_P_Hourly.csv', 'w', newline='') as outFile:
     writer = csv.writer(outFile)
     writer.writerow(cols)
