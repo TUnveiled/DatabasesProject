@@ -31,7 +31,7 @@ data = [[]]
 cols = [""]
 
 # interpret csv file
-with open('Electricity_P.csv') as csv_file:
+with open('Electricity_P_Hourly.csv') as csv_file:
 
     # open csv
     csv_reader = csv.reader(csv_file, delimiter=',')
@@ -43,25 +43,13 @@ with open('Electricity_P.csv') as csv_file:
             # line 1 is the column count
             cols = row
             line_count += 1
-            row.append("Time of Day")
-            row.append("Time of Year")
 
         elif line_count == 1:
             # line 2 is the first element
-            currenttime = datetime.datetime.fromtimestamp(int(row[0]))
-
-            # time is preprocessed preliminarily at this point, but not as much as we're planning
-            row.append(currenttime.hour * 3600 + currenttime.minute * 60 + currenttime.second)
-            row.append((float(currenttime.month) + float(currenttime.day) / 31 - 1) * 100 / 12)
             data = [row]
             line_count += 1
         else:
             # other lines are data rows
-            currenttime = datetime.datetime.fromtimestamp(int(row[0]))
-
-            # time is preprocessed preliminarily at this point, but not as much as we're planning
-            row.append(currenttime.hour * 3600 + currenttime.minute * 60 + currenttime.second)
-            row.append((float(currenttime.month) + float(currenttime.day) / 31 - 1) * 100 / 12)
             data.append(row)
             line_count += 1
     print(f'Processed {line_count} lines.')
