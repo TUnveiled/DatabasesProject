@@ -101,7 +101,7 @@ for binEnding in binEndings:
     tempslice = data[previousBinEnding:binEnding]
     maxes = tempslice[0]
     for row in tempslice:
-        for i in range(0, len(tempslice[0])):
+        for i in range(0, len(row)):
             if maxes[i] < row[i]:
                 maxes[i] = row[i]
     dataByHour.append(maxes)
