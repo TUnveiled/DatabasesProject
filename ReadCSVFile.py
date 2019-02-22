@@ -20,3 +20,10 @@ def readFile(filename='Electricity_P.csv'):
     # converting list of lists with string values into 2D array of floats to do calculations
     data = np.array(list[1:], dtype=np.float32)
     return data, cols
+
+
+def writeFile(cols, data, filename):
+    with open(filename, 'w', newline='') as outFile:
+        writer = csv.writer(outFile)
+        writer.writerow(cols)
+        writer.writerows(data)

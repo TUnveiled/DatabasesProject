@@ -101,3 +101,9 @@ def ImputeData(data, imputeType):
         imp = SimpleImputer(missing_values=np.nan, strategy='median')
         imp.fit(data)
 
+    if imputeType.lower() == 'mode':
+        imp = SimpleImputer(missing_values=np.nan, strategy='most_frequent')
+        imp.fit(data)
+
+    return data
+
