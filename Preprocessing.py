@@ -72,15 +72,16 @@ def normalizeData(data, cols, normType):
     elif normType.lower() == 'l2':
         normData = normalize(data, norm='l2', axis=1)
 
-    # If normData is not empty, write it to a file
-    if normData is [[]]:
-        with open('%s.csv' % normType, mode='w+') as normalized_file:
-            normalize_writer = csv.writer(normalized_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
+        # If normData is not empty, write it to a file
+        if normData is not [[]]:
+            with open('%s.csv' % normType, newline='', mode='w') as normalized_file:
+                normalize_writer = csv.writer(normalized_file, delimiter=',', quotechar='"', quoting=csv.QUOTE_MINIMAL)
 
-            for row in data:
-                normalize_writer.writerow(row)
+                normalize_writer.writerow(cols)
 
-    return normData
+                normalize_writer.writerows(normData)
+
+        return normData
 
 # testSize = float between 0 to 100
 def TrainTestSplit(data, testSize):
