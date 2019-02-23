@@ -24,7 +24,7 @@ def normalizeData(data, normType):
 
 
 def threshold(data):
-    thresholds = [0, 0, 68, 0, 0, 0, 0, 0, 0, 116]
+    thresholds = [0, 0, 68, 100, 0, 0, 0, 35, 0, 116]
 
     for row in range(len(data)):
         for col in range(1, 11):
