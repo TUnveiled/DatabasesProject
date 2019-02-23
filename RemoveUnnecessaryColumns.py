@@ -26,7 +26,7 @@ appliances = {"WHE":"Whole House",
               "TVE":"Entertainment",
               "UNE":"Unaccounted"}
 
-toRemove = ["WHE", "RSE", "GRE", "MHE", "B1E", "B2E", "BME", "EQE", "OFE"
+toRemove = ["WHE", "RSE", "GRE", "MHE", "B1E", "B2E", "BME", "EQE", "OFE",
             "UTE", "DNE", "OUE", "UNE"]
 
 for col in toRemove:
@@ -34,6 +34,7 @@ for col in toRemove:
         if cols[i] == col:
             data = np.delete(data, i, 1)
             cols = np.delete(cols, i)
+            i -= 1
             break
 
 writeFile(cols, data, "Electricity_P_Thinned.csv")
