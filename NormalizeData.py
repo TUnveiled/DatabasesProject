@@ -3,8 +3,9 @@ from sklearn.preprocessing import normalize
 from ReadCSVFile import readFile, writeFile
 
 # method to normalize data
-# normType = "minmax", "l1", "l2", "binary"
+# normType = "minmax", "l1", "l2"
 def normalizeData(data, normType):
+    normData = threshold(data)
 
     # features range from 0 to 1
     if normType.lower() == 'minmax':
@@ -18,10 +19,6 @@ def normalizeData(data, normType):
     # Least squares - sum of squares in each column equals 1 (sensitive to outliers)
     elif normType.lower() == 'l2':
         normData = normalize(data, norm='l2', axis=1)
-
-    elif normType.lower() == 'binary':
-        normData = threshold(data)
-        normData = normalizeData(normData, 'minmax')
 
     return normData
 
@@ -39,7 +36,7 @@ def threshold(data):
     return data
 
 
-normTypes = ["Minmax", "Binary"]
+normTypes = ["Minmax", "11"]
 
 for type in normTypes:
     # skip the Imputed ones because there are no missing values
