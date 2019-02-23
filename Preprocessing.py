@@ -81,9 +81,9 @@ def normalizeData(data, cols, normType):
     return normData
 
 # testSize = float between 0 to 100
-def TrainTestSplit(data, testSize):
-    X_train, X_test, y_train, y_test = train_test_split(data[:,0], data[:, 1:], test_size=testSize, random_state=42)
-    return X_train, X_test, y_train, y_test
+def TrainTestSplit(data, testSize=0.25):
+    train, test = train_test_split(data, test_size=testSize, random_state=42)
+    return train, test
 
 
 # imputeType = 'mean', 'median'

@@ -49,4 +49,3 @@ for type in normTypes:
 
     writeFile(cols, data, "Electricity_P_Thinned_Hourly_" + type + "Norm.csv")
 
-
