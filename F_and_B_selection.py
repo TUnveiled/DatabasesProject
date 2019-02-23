@@ -13,7 +13,6 @@ sfsF = sfs(LR, k_features=6, forward=True, floating=False, verbose=2, scoring='r
 # setting up the backward selection. picking 6 best attributes. using R squared as the scoring metric
 sfsB = sfs(LR, k_features=6, forward=False, floating=False, verbose=2, scoring='r2')
 
-
 names = {"1":"UNIX_TS",
                   "2":"CWE",
                   "3":"DWE",
