@@ -1,7 +1,7 @@
 from Preprocessing import TrainTestSplit
 from ReadCSVFile import readFile, writeFile
 
-norms = ["11Norm", "MinmaxNorm"]
+norms = ["L1Norm", "MinmaxNorm"]
 
 for norm in norms:
     data, cols = readFile(filename="Electricity_P_Thinned_Hourly_" + norm + ".csv")

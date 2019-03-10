@@ -16,7 +16,7 @@ def correctImbalancedData(data, algoType, index):
     return x_result, y_result
 
 
-norms = ["11Norm", "MinMaxNorm"]
+norms = ["L1Norm", "MinMaxNorm"]
 algos = ["SMOTE", "ADASYN"]
 for i in range(1, 11):
     for norm in norms:

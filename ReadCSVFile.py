@@ -15,11 +15,36 @@ def readFile(filename='Electricity_P.csv'):
             else:
                 list.append(row)
                 line_count += 1
-        print(f'Processed {line_count} lines.')
 
     # converting list of lists with string values into 2D array of floats to do calculations
     data = np.array(list[1:], dtype=np.float32)
     return data, cols
+
+
+def readTestFile(filename, trainCols):
+    data, cols = readFile(filename)
+
+    cols = np.array(cols)
+
+    colsToRemove = set(cols).difference(set(trainCols))
+    colsToRemove = list(colsToRemove)
+
+    for i in range(len(colsToRemove)):
+        for j in range(len(cols)):
+            if colsToRemove[i] == cols[j]:
+                data = np.delete(data, j, 1)
+                cols = np.delete(cols, j)
+                break
+
+    permutation = np.zeros(len(trainCols), np.int)
+    for i in range(len(trainCols)):
+        for j in range(len(cols)):
+            if trainCols[i] == cols[j]:
+                permutation[i] = j
+                break
+
+    return data[:, permutation]
+
 
 
 def writeFile(cols, data, filename):

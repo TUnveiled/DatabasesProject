@@ -32,7 +32,7 @@ names = {1:"UNIX_TS",
 
 imbs = ["SMOTEImb", "ADASYNImb"]
 classes = ["CWE", "DWE", "FRE", "HPE", "WOE", "CDE", "EBE", "FGE", "HTE", "TVE"]
-norms = ["MinMaxNorm", "11Norm"]
+norms = ["MinMaxNorm", "L1Norm"]
 for classif in classes:
     for imb in imbs:
         for norm in norms:

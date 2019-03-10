@@ -14,6 +14,7 @@ def normalizeData(data, normType):
 
     # Least absolute deviations - sum of absolute values in each column equals 1 (insensitive to outliers)
     elif normType.lower() == 'l1':
+        print("here")
         normData = normalize(data, norm='l1', axis=1)
 
     # Least squares - sum of squares in each column equals 1 (sensitive to outliers)
@@ -36,7 +37,7 @@ def threshold(data):
     return data
 
 
-normTypes = ["Minmax", "11"]
+normTypes = ["Minmax", "L1"]
 
 for type in normTypes:
     # skip the Imputed ones because there are no missing values
