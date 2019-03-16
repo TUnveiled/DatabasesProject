@@ -1,4 +1,4 @@
-from sklearn.naive_bayes import GaussianNB
+from sklearn.linear_model import LogisticRegression
 from ReadCSVFile import readFile, readTestFile
 import metrics as m
 
@@ -13,17 +13,17 @@ for classif in classes:
         for norm in norms:
             for featselect in featselects:
                 trainFile = "Electricity_P_Thinned_Hourly_" + norm + "_Train_" + classif + "_" + imb + "_" + \
-                            featselect + "_NB.csv"
+                            featselect + "_LR.csv"
                 dataTrain, cols = readFile(filename=trainFile)
 
-                NB = GaussianNB()
-                NB.fit(dataTrain[:, :-1], dataTrain[:, -1])
+                LR = LogisticRegression(solver='lbfgs', max_iter=10000)
+                LR.fit(dataTrain[:, :-1], dataTrain[:, -1])
 
                 testFile = "Electricity_P_Thinned_Hourly_" + norm + "_Test.csv"
                 dataTest = readTestFile(testFile, cols)
 
                 true_class = dataTest[:, -1]
-                pred_class = NB.predict(dataTest[:, :-1])
+                pred_class = LR.predict(dataTest[:, :-1])
 
                 print("File : " + trainFile)
                 print("accuracy/f1/precision/sensitivity/specificity/tp/tn/fp/fn")
@@ -36,3 +36,4 @@ for classif in classes:
                       str(m.tn(true_class, pred_class)) + "/" +
                       str(m.fp(true_class, pred_class)) + "/" +
                       str(m.fn(true_class, pred_class)))
+
