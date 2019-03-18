@@ -13,7 +13,7 @@ for classif in classes:
         for norm in norms:
             for featselect in featselects:
                 trainFile = "Electricity_P_Thinned_Hourly_" + norm + "_Train_" + classif + "_" + imb + "_" + \
-                            featselect + ".csv"
+                            featselect + "_DT.csv"
                 dataTrain, cols = readFile(filename=trainFile)
 
                 DT = tree.DecisionTreeClassifier()
