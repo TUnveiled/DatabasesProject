@@ -25,7 +25,8 @@ def normalizeData(data, normType):
 
 
 def threshold(data):
-    thresholds = [0, 0, 68, 100, 0, 0, 0, 35, 0, 116]
+    # CWE,DWE,FRE,HPE,WOE,CDE,EBE,FGE,HTE,TVE
+    thresholds = [30, 500, 136, 100, 100, 150, 0, 70, 10, 116]
 
     for row in range(len(data)):
         for col in range(1, 11):
@@ -37,11 +38,11 @@ def threshold(data):
     return data
 
 
-normTypes = ["Minmax", "L1"]
+normTypes = ["Minmax"]
 
 for type in normTypes:
     # skip the Imputed ones because there are no missing values
-    data, cols = readFile(filename="Electricity_P_Thinned_Hourly.csv")
+    data, cols = readFile(filename="Electricity_P_Thinned_Hourly_MeanImp.csv")
 
     data = normalizeData(data, type)
 
