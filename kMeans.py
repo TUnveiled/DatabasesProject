@@ -2,50 +2,47 @@ from sklearn.cluster import KMeans
 import pandas as pd
 import numpy
 from scipy import stats
-numpy.set_printoptions(threshold=numpy.inf)
-
 import matplotlib.pyplot as plt
 
-
-df = pd.read_csv("Electricity_P_Thinned_Hourly_MinmaxNorm.csv")
+df = pd.read_csv("Electricity_P_Thinned_Hourly_Binary.csv")
 df = df.loc[:, 'CWE':'Hour']
+clmns = ['CWE','DWE','FRE','HPE','WOE','CDE','EBE','FGE','HTE','TVE']
+
 #Make a copy of DF
-df_tr = df
-
-#Standardize
-clmns = ['CWE','DWE','FRE','HPE','WOE','CDE','EBE','FGE','HTE','TVE','Hour']
-
-#df_tr_std = stats.zscore(df_tr[clmns])
-
 
 '''Sum_of_squared_distances = []
-K = range(1,48)
+K = range(1,15)
 for k in K:
     km = KMeans(n_clusters=k)
-    km = km.fit(df_tr)
+    km = km.fit(df_tr_std)
     Sum_of_squared_distances.append(km.inertia_)
 
 
 plt.plot(K, Sum_of_squared_distances, 'bx-')
 plt.xlabel('k')
 plt.ylabel('Sum_of_squared_distances')
-plt.title('Elbow Method For Optimal k')
+plt.title('Elbow Method For Optimal k MM zscore')
 plt.show()'''
 
 
-#Cluster the data
-nclusters = 24
-kmeans = KMeans(n_clusters=nclusters, random_state=0).fit(df_tr)
-labels = kmeans.labels_
+for i in range(len(clmns)-1):
+    df_tr = df.loc[:, [clmns[i],'Hour']]
+    nclusters = 24
+    kmeans = KMeans(n_clusters=nclusters, random_state=0).fit(df_tr)
+    labels = kmeans.labels_
+    centers = kmeans.cluster_centers_
 
-#Glue back to originaal data
-df_tr['clusters'] = labels
+    # Glue back to originaal data
+    df_tr['clusters'] = labels
 
-#Add the column into our list
-clmns.extend(['clusters'])
+    # Add the column into our list
+    clmns.extend(['clusters'])
 
-df_tr.sort_values(['clusters']).to_csv("KMeans "+ str(nclusters) +".csv")
+    df_tr.sort_values(['clusters']).to_csv("KMeans_Thin_H_BIN_" + clmns[i] + "_Hour.csv", index=False)
 
-#Lets analyze the clusters
-with pd.option_context('display.max_rows', None, 'display.max_columns', None):
-    print (df_tr[clmns].groupby(['clusters']).mean())
+    plt.scatter(centers[:, 1], centers[:, 0], c='red', alpha=0.5)
+    plt.ylabel(clmns[i])
+    plt.xlabel('Hour')
+    plt.title(clmns[i]+" VS. Hour")
+    plt.show()
+    plt.savefig(clmns[i]+" VS. Hour.png")
