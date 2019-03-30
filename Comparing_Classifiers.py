@@ -31,18 +31,19 @@ for classif in classes:
                         clf = GaussianNB()
                     elif classifier == "DT":
                         clf = DecisionTreeClassifier()
+
                     trainFile = "Electricity_P_Thinned_Hourly_" + norm + "_Train_" + classif + "_" + imb + "_" + \
                                 featselect + "_" + classifier + ".csv"
                     dataTrain, cols = readFile(filename=trainFile)
 
-                    NB = GaussianNB()
-                    NB.fit(dataTrain[:, :-1], dataTrain[:, -1])
+                    clf.fit(dataTrain[:, :-1], dataTrain[:, -1])
 
                     testFile = "Electricity_P_Thinned_Hourly_" + norm + "_Test.csv"
                     dataTest = readTestFile(testFile, cols)
 
                     true_class = dataTest[:, -1]
-                    pred_class = NB.predict(dataTest[:, :-1])
+                    pred_class = clf.predict(dataTest[:, :-1])
+                    print(true_class, pred_class)
                     if trueAndPred[classif] == ():
                         trueAndPred[classif] = (true_class, pred_class, classif + "/" + imb + "/" + norm + "/" +
                                                 featselect + "/" + classifier)

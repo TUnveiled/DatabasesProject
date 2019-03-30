@@ -36,3 +36,4 @@ for classif in classes:
                       str(m.tn(true_class, pred_class)) + "/" +
                       str(m.fp(true_class, pred_class)) + "/" +
                       str(m.fn(true_class, pred_class)))
+

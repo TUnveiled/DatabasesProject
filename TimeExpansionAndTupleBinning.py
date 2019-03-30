@@ -87,6 +87,7 @@ with open('Electricity_P_Thinned.csv') as csv_file:
 previousRow = data[0]
 binEndings = []
 index = 1
+# find the end of each hour in the dataset
 for row in data[1:]:
     if row[-4] != previousRow[-4]:
         binEndings.append(index)
@@ -96,6 +97,7 @@ for row in data[1:]:
 
 previousBinEnding = 0
 
+# find the max power usage of each appliance for each hour and create the dataset
 for binEnding in binEndings:
     tempslice = data[previousBinEnding:binEnding]
     maxes = tempslice[0]
