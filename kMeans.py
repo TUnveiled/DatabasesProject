@@ -25,7 +25,7 @@ plt.title('Elbow Method For Optimal k MM zscore')
 plt.show()'''
 
 
-for i in range(len(clmns)-1):
+for i in range(len(clmns)):
     df_tr = df.loc[:, [clmns[i],'Hour']]
     nclusters = 24
     kmeans = KMeans(n_clusters=nclusters, random_state=0).fit(df_tr)
@@ -40,9 +40,14 @@ for i in range(len(clmns)-1):
 
     df_tr.sort_values(['clusters']).to_csv("KMeans_Thin_H_BIN_" + clmns[i] + "_Hour.csv", index=False)
 
+    text = "Hour: "
     plt.scatter(centers[:, 1], centers[:, 0], c='red', alpha=0.5)
     plt.ylabel(clmns[i])
     plt.xlabel('Hour')
     plt.title(clmns[i]+" VS. Hour")
+    plt.xticks(range(0,24))
+
+    for x in range(0,24):
+        plt.axvline(x)
+    plt.savefig('Kmeans_Plots\\'+clmns[i] + " VS. Hour.png")
     plt.show()
-    plt.savefig(clmns[i]+" VS. Hour.png")
