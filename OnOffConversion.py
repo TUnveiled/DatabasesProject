@@ -1,10 +1,10 @@
 import pandas as pd
 
 
-df = pd.read_csv("C:\\Users\\Matthew\\Downloads\\dataverse_files\\Electricity_P.csv")
+df = pd.read_csv("Electricity_P_Thinned_Hourly_MeanImp.csv")
 
 df_tr = df.loc[:, ['UNIX_TS','CWE','DWE','FRE','HPE','WOE','CDE','EBE','FGE','HTE','TVE']]
-thresholds = [30, 500, 136, 100, 100, 150, 0, 70, 10, 116]
+thresholds = [10, 10, 10, 10, 10, 10, 10, 10, 10, 10]
 
 for row in range(len(df_tr.index)):
     for col in range(1, 11):
@@ -14,4 +14,4 @@ for row in range(len(df_tr.index)):
         else:
             df_tr.iat[row, col] = 0
 
-df_tr.to_csv("Electricity_P_Binary.csv", index=False)
+df_tr.to_csv("Electricity_P_Binary_NewThresh.csv", index=False)

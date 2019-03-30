@@ -1,10 +1,10 @@
 import pandas as pd
 from mlxtend.frequent_patterns import apriori
 
-df = pd.read_csv("Electricity_P_Thinned_Hourly_MinmaxNorm.csv")
+df = pd.read_csv("Electricity_P_Binary_NewThresh.csv")
 
-df = df.loc[:, 'CWE':'TVE']
+df_tr = df.loc[:, 'CWE':'TVE']
 
-results = apriori(df, min_support=0.5, use_colnames=True)
+results = apriori(df_tr, min_support=0.8, use_colnames=True)
 
 print(results)
